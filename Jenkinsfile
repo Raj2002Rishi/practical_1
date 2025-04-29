@@ -1,41 +1,38 @@
 pipeline {
     agent any
 
-    environment {
-        MY_ENV_VAR = 'This is a custom environment variable'
-    }
-
     stages {
         stage('Clone Code from GitHub') {
             steps {
-                echo "Code already checked out by Jenkins"
+                echo 'Code already checked out by Jenkins'
             }
         }
 
         stage('Run Shell Script') {
             steps {
-                sh './your-script.sh'
+                bat '''
+                    echo Running a Windows batch script...
+                    echo Hello from Jenkins on Windows!
+                '''
             }
         }
 
         stage('Print Working Directory Content') {
             steps {
-                sh 'pwd'
-                sh 'ls -la'
+                bat 'dir'
             }
         }
 
         stage('Print Environment Variables') {
             steps {
-                sh 'echo "MY_ENV_VAR is: $MY_ENV_VAR"'
-                sh 'printenv'
+                bat 'set'
             }
         }
     }
 
     post {
         always {
-            echo "Pipeline execution finished."
+            echo 'Pipeline execution finished.'
         }
     }
 }
